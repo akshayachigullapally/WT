@@ -1,0 +1,222 @@
+// index.html
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Food Ordering</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            width: 500px;
+            margin: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+
+        input {
+            width: 50px;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 8px 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Food Menu</h2>
+
+<form action="OrderServlet" method="post">
+
+<table>
+    <tr>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+    </tr>
+
+    <tr>
+        <td>Burger</td>
+        <td>100</td>
+        <td><input type="number" name="burgerQty" id="burger" value="0" onchange="calculate()"></td>
+        <td id="burgerTotal">0</td>
+    </tr>
+
+    <tr>
+        <td>Pizza</td>
+        <td>200</td>
+        <td><input type="number" name="pizzaQty" id="pizza" value="0" onchange="calculate()"></td>
+        <td id="pizzaTotal">0</td>
+    </tr>
+
+    <tr>
+        <td>Sandwich</td>
+        <td>80</td>
+        <td><input type="number" name="sandwichQty" id="sandwich" value="0" onchange="calculate()"></td>
+        <td id="sandwichTotal">0</td>
+    </tr>
+
+    <tr>
+        <td>Pasta</td>
+        <td>150</td>
+        <td><input type="number" name="pastaQty" id="pasta" value="0" onchange="calculate()"></td>
+        <td id="pastaTotal">0</td>
+    </tr>
+
+    <tr>
+        <td>Fries</td>
+        <td>60</td>
+        <td><input type="number" name="friesQty" id="fries" value="0" onchange="calculate()"></td>
+        <td id="friesTotal">0</td>
+    </tr>
+
+    <tr>
+        <td>Coke</td>
+        <td>40</td>
+        <td><input type="number" name="cokeQty" id="coke" value="0" onchange="calculate() "></td>
+        <td id="cokeTotal">0</td>
+    </tr>
+</table>
+
+<br>
+
+Grand Total: ₹<span id="grandTotal">0</span><br><br>
+Delivery Charge: ₹<span id="delivery">0</span><br><br>
+
+Final Total: ₹<span id="finalTotal">0</span>
+
+<input type="hidden" name="finalAmount" id="finalAmount">
+
+<br><br>
+
+<button type="submit">Place Order</button>
+
+</form>
+
+<script>
+
+function calculate() {
+
+    let burger = document.getElementById("burger").value * 100;
+    let pizza = document.getElementById("pizza").value * 200;
+    let sandwich = document.getElementById("sandwich").value * 80;
+    let pasta = document.getElementById("pasta").value * 150;
+    let fries = document.getElementById("fries").value * 60;
+    let coke = document.getElementById("coke").value * 40;
+
+    document.getElementById("burgerTotal").innerHTML = burger;
+    document.getElementById("pizzaTotal").innerHTML = pizza;
+    document.getElementById("sandwichTotal").innerHTML = sandwich;
+    document.getElementById("pastaTotal").innerHTML = pasta;
+    document.getElementById("friesTotal").innerHTML = fries;
+    document.getElementById("cokeTotal").innerHTML = coke;
+
+    let total = burger + pizza + sandwich + pasta + fries + coke;
+
+    document.getElementById("grandTotal").innerHTML = total;
+
+    let delivery = 0;
+
+    if (total < 500 && total > 0) {
+        delivery = 50;
+    }
+
+    document.getElementById("delivery").innerHTML = delivery;
+
+    let finalTotal = total + delivery;
+
+    document.getElementById("finalTotal").innerHTML = finalTotal;
+
+    document.getElementById("finalAmount").value = finalTotal;
+}
+
+</script>
+
+</body>
+</html>
+
+
+
+
+//OrderServlet.java
+import java.io.*;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+
+public class OrderServlet extends HttpServlet {
+
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response)
+                          throws ServletException, IOException {
+
+        request.setAttribute("burgerQty", request.getParameter("burgerQty"));
+        request.setAttribute("pizzaQty", request.getParameter("pizzaQty"));
+        request.setAttribute("sandwichQty", request.getParameter("sandwichQty"));
+        request.setAttribute("pastaQty", request.getParameter("pastaQty"));
+        request.setAttribute("friesQty", request.getParameter("friesQty"));
+        request.setAttribute("cokeQty", request.getParameter("cokeQty"));
+
+        request.setAttribute("finalAmount",
+                request.getParameter("finalAmount"));
+
+        RequestDispatcher rd =
+                request.getRequestDispatcher("result.jsp");
+
+        rd.forward(request, response);
+    }
+}
+
+
+//result.jsp
+
+
+<html>
+<head>
+    <title>Order Summary</title>
+</head>
+
+<body>
+
+<h2>Order Summary</h2>
+
+Burger Quantity: ${burgerQty} <br><br>
+Pizza Quantity: ${pizzaQty} <br><br>
+Sandwich Quantity: ${sandwichQty} <br><br>
+Pasta Quantity: ${pastaQty} <br><br>
+Fries Quantity: ${friesQty} <br><br>
+Coke Quantity: ${cokeQty} <br><br>
+
+Final Amount: ₹${finalAmount}
+
+</body>
+</html>
+
+//web.xml
+<web-app>
+    <servlet>
+        <servlet-name>OrderServlet</servlet-name>
+        <servlet-class>OrderServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>OrderServlet</servlet-name>
+        <url-pattern>/OrderServlet</url-pattern>
+    </servlet-mapping>
+
+</web-app>
+
+//cmd 
+javac -cp "C:\apache-tomcat-11.0.21\lib\*" OrderServlet.java

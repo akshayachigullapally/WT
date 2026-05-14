@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>News Portal</title>
+    <style>
+        body{
+            font-family: Arial;
+            margin:0;
+            background:#f4f4f4;
+        }
+
+        nav{
+            background:black;
+            color:white;
+            padding:15px;
+            text-align:center;
+        }
+
+        .featured{
+            background:orange;
+            padding:20px;
+            text-align:center;
+            margin:20px;
+        }
+
+        .trending{
+            background:white;
+            padding:15px;
+            margin:20px;
+        }
+
+        .articles{
+            display:flex;
+            gap:20px;
+            margin:20px;
+            flex-wrap:wrap;
+        }
+
+        .card{
+            background:white;
+            padding:15px;
+            width:250px;
+            border:1px solid gray;
+        }
+
+        button{
+            padding:8px;
+            margin:5px;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <h2>My News Portal</h2>
+        <button onclick="filterNews('all')">All</button>
+        <button onclick="filterNews('sports')">Sports</button>
+        <button onclick="filterNews('technology')">Technology</button>
+        <button onclick="filterNews('politics')">Politics</button>
+    </nav>
+
+    <!-- Featured Article -->
+    <div class="featured">
+        <h2>Featured Article</h2>
+        <p>Breaking News: Major event happening today!</p>
+    </div>
+
+    <!-- Trending Section -->
+    <div class="trending">
+        <h3>Trending News</h3>
+        <ul>
+            <li>Cricket World Cup Updates</li>
+            <li>New AI Technology Released</li>
+            <li>Election Results Coming Soon</li>
+        </ul>
+    </div>
+
+    <!-- Article Cards -->
+    <div class="articles">
+        <div class="card sports">
+            <h3>Sports News</h3>
+            <p>India wins cricket match.</p>
+        </div>
+
+        <div class="card technology">
+            <h3>Technology News</h3>
+            <p>New smartphone launched today.</p>
+        </div>
+
+        <div class="card politics">
+            <h3>Politics News</h3>
+            <p>Government announces new policy.</p>
+        </div>
+
+        <div class="card sports">
+            <h3>Football News</h3>
+            <p>Team wins championship trophy.</p>
+        </div>
+    </div>
+
+    <script>
+        function filterNews(category){
+            let cards = document.querySelectorAll(".card");
+
+            cards.forEach(function(card){
+                if(category === "all"){
+                    card.style.display = "block";
+                }
+                else if(card.classList.contains(category)){
+                    card.style.display = "block";
+                }
+                else{
+                    card.style.display = "none";
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

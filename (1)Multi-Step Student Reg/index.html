@@ -1,0 +1,136 @@
+//index.html
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Registration</title>
+    <style>
+        body {
+            font-family: Arial;
+            width: 400px;
+            margin: auto;
+        }
+
+        .step {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+        }
+
+        button {
+            padding: 8px 15px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+<h2>Student Registration</h2>
+
+<form action="RegisterServlet" method="post">
+
+    <!-- Step 1 -->
+    <div class="step active" id="step1">
+        <h3>Personal Details</h3>
+
+        <input type="text" id="name" name="name" placeholder="Name">
+        <input type="email" id="email" name="email" placeholder="Email">
+        <input type="text" id="phone" name="phone" placeholder="Phone">
+
+        <button type="button" onclick="nextStep(1)">Next</button>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step" id="step2">
+        <h3>Academic Details</h3>
+
+        <input type="text" id="department" name="department" placeholder="Department">
+        <input type="text" id="year" name="year" placeholder="Year">
+        <input type="text" id="gpa" name="gpa" placeholder="GPA">
+
+        <button type="button" onclick="prevStep(2)">Back</button>
+        <button type="button" onclick="nextStep(2)">Next</button>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step" id="step3">
+        <h3>Course Preferences</h3>
+
+        <input type="text" id="course" name="course" placeholder="Preferred Course">
+
+        <button type="button" onclick="prevStep(3)">Back</button>
+        <button type="submit">Submit</button>
+    </div>
+
+</form>
+
+<script>
+
+    let student = {};
+
+    function nextStep(step) {
+
+        if (step == 1) {
+
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+            let phone = document.getElementById("phone").value;
+
+            if (name == "" || email == "" || phone == "") {
+                alert("Fill all fields");
+                return;
+            }
+
+            student.name = name;
+            student.email = email;
+            student.phone = phone;
+
+            document.getElementById("step1").classList.remove("active");
+            document.getElementById("step2").classList.add("active");
+        }
+
+        if (step == 2) {
+
+            let department = document.getElementById("department").value;
+            let year = document.getElementById("year").value;
+            let gpa = document.getElementById("gpa").value;
+
+            if (department == "" || year == "" || gpa == "") {
+                alert("Fill all fields");
+                return;
+            }
+
+            student.department = department;
+            student.year = year;
+            student.gpa = gpa;
+
+            document.getElementById("step2").classList.remove("active");
+            document.getElementById("step3").classList.add("active");
+        }
+    }
+
+    function prevStep(step) {
+
+        if (step == 2) {
+            document.getElementById("step2").classList.remove("active");
+            document.getElementById("step1").classList.add("active");
+        }
+
+        if (step == 3) {
+            document.getElementById("step3").classList.remove("active");
+            document.getElementById("step2").classList.add("active");
+        }
+    }
+
+</script>
+
+</body>
+</html>

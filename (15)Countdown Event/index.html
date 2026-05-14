@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Countdown Event Tracker</title>
+    <style>
+        body{
+            text-align:center;
+            font-family:Arial;
+        }
+
+        #timer{
+            font-size:25px;
+            font-weight:bold;
+            color:blue;
+            margin-top:20px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Countdown Event Tracker</h2>
+
+Enter Event Name:
+<input type="text" id="eventName"><br><br>
+
+Enter Event Date:
+<input type="datetime-local" id="eventDate"><br><br>
+
+<button onclick="startCountdown()">Start Countdown</button>
+
+<h3 id="eventTitle"></h3>
+<div id="timer"></div>
+
+<script>
+let interval;
+
+function startCountdown(){
+    let name = document.getElementById("eventName").value;
+    let date = document.getElementById("eventDate").value;
+
+    let eventTime = new Date(date).getTime();
+
+    document.getElementById("eventTitle").innerHTML = name + " Countdown";
+
+    clearInterval(interval);
+
+    interval = setInterval(function(){
+
+        let now = new Date().getTime();
+        let distance = eventTime - now;
+
+        if(distance <= 0){
+            clearInterval(interval);
+            document.getElementById("timer").innerHTML = "Event Started";
+            return;
+        }
+
+        let days = Math.floor(distance / (1000*60*60*24));
+        let hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+        let minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+        let seconds = Math.floor((distance % (1000*60)) / 1000);
+
+        document.getElementById("timer").innerHTML =
+            days + " Days " +
+            hours + " Hours " +
+            minutes + " Minutes " +
+            seconds + " Seconds ";
+            
+    },1000);
+}
+</script>
+
+</body>
+</html>

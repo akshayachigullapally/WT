@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Digital Library</title>
+    <style>
+        table, th, td{
+            border:1px solid black;
+            border-collapse: collapse;
+            padding:10px;
+        }
+
+        body{
+            text-align:center;
+            font-family:Arial;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Digital Library</h2>
+
+<select id="genreFilter" onchange="filterBooks()">
+    <option value="All">All</option>
+    <option value="Technology">Technology</option>
+    <option value="History">History</option>
+    <option value="Fiction">Fiction</option>
+</select>
+
+<button onclick="sortBooks('year')">Sort by Year</button>
+<button onclick="sortBooks('rating')">Sort by Rating</button>
+
+<br><br>
+
+<table id="bookTable">
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Genre</th>
+        <th>Year</th>
+        <th>Rating</th>
+    </tr>
+</table>
+
+<script>
+let books=[];
+
+fetch("books.xml")
+.then(response => response.text())
+.then(data => {
+    let parser = new DOMParser();
+    let xml = parser.parseFromString(data,"text/xml");
+
+    books = Array.from(xml.getElementsByTagName("book"));
+    displayBooks(books);
+});
+
+function displayBooks(bookList){
+    let table = document.getElementById("bookTable");
+
+    table.innerHTML = `
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Genre</th>
+        <th>Year</th>
+        <th>Rating</th>
+    </tr>`;
+
+    bookList.forEach(book=>{
+        table.innerHTML += `
+        <tr>
+            <td>${book.getElementsByTagName("title")[0].textContent}</td>
+            <td>${book.getElementsByTagName("author")[0].textContent}</td>
+            <td>${book.getElementsByTagName("genre")[0].textContent}</td>
+            <td>${book.getElementsByTagName("year")[0].textContent}</td>
+            <td>${book.getElementsByTagName("rating")[0].textContent}</td>
+        </tr>`;
+    });
+}
+
+function sortBooks(type){
+    books.sort((a,b)=>{
+        let x=parseFloat(a.getElementsByTagName(type)[0].textContent);
+        let y=parseFloat(b.getElementsByTagName(type)[0].textContent);
+        return x-y;
+    });
+
+    displayBooks(books);
+}
+
+function filterBooks(){
+    let genre=document.getElementById("genreFilter").value;
+
+    if(genre=="All"){
+        displayBooks(books);
+    }
+    else{
+        let filtered=books.filter(book =>
+            book.getElementsByTagName("genre")[0].textContent==genre
+        );
+
+        displayBooks(filtered);
+    }
+}
+</script>
+
+</body>
+</html>

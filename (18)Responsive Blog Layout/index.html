@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Responsive Blog Layout</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: white;
+            color: black;
+        }
+
+        header {
+            background: rgb(238, 232, 120);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        nav {
+            background: rgb(235, 214, 156);
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        nav a {
+            color: white;
+            margin: 10px;
+            text-decoration: none;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+
+        .content {
+            flex: 3;
+            background: #f4f4f4;
+            padding: 20px;
+        }
+
+        .sidebar {
+            flex: 1;
+            background: lightgray;
+            padding: 20px;
+        }
+
+        footer {
+            background: rgb(200, 194, 194);
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 8px;
+        }
+
+        /* Dark Mode */
+        .dark {
+            background: black;
+            color: white;
+        }
+
+        .dark .content {
+            background: #333;
+            color: white;
+        }
+
+        .dark .sidebar {
+            background: #555;
+            color: white;
+        }
+
+        @media(max-width:768px){
+            .container{
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>My Blog</h1>
+        <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        
+        <div class="content">
+            <h2>Blog Post Title</h2>
+            <p>This is the main blog content area where articles are displayed.</p>
+        </div>
+
+        <div class="sidebar">
+            <h3>Recent Posts</h3>
+            <ul>
+                <li>Post 1</li>
+                <li>Post 2</li>
+                <li>Post 3</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 My Blog Website</p>
+    </footer>
+
+    <script>
+        // Load saved theme
+        if(localStorage.getItem("theme") === "dark"){
+            document.body.classList.add("dark");
+        }
+
+        function toggleDarkMode(){
+            document.body.classList.toggle("dark");
+
+            if(document.body.classList.contains("dark")){
+                localStorage.setItem("theme", "dark");
+            } 
+            else{
+                localStorage.setItem("theme", "light");
+            }
+        }
+    </script>
+
+</body>
+</html>
