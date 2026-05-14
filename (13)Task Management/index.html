@@ -2,111 +2,173 @@
 <html>
 <head>
     <title>Task Management Dashboard</title>
+
     <style>
-        body{
+        body {
             font-family: Arial;
-            text-align:center;
+            width: 500px;
+            margin: auto;
         }
 
-        input, select, button{
-            padding:8px;
-            margin:5px;
+        input, select, button {
+            padding: 8px;
+            margin: 5px;
         }
 
-        li{
-            list-style:none;
-            padding:10px;
-            margin:10px;
-            border:1px solid black;
-            width:300px;
-            margin:auto;
-        }
-
-        .completed{
-            background-color:lightgreen;
-            text-decoration: line-through;
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
         }
     </style>
 </head>
+
 <body>
 
 <h2>Task Management Dashboard</h2>
 
-<input type="text" id="taskInput" placeholder="Enter task">
+<input type="text" id="task"
+       placeholder="Enter Task">
+
 <select id="priority">
     <option value="Low">Low</option>
     <option value="Medium">Medium</option>
     <option value="High">High</option>
 </select>
 
-<button onclick="addTask()">Add Task</button>
+<button onclick="addTask()">
+    Add Task
+</button>
 
 <br><br>
 
-<select id="filter" onchange="filterTasks()">
-    <option value="All">All Tasks</option>
+Filter by Priority:
+
+<select id="filter"
+        onchange="displayTasks()">
+
+    <option value="All">All</option>
     <option value="Low">Low</option>
     <option value="Medium">Medium</option>
     <option value="High">High</option>
 </select>
 
-<h3>Completed Tasks: <span id="completedCount">0</span></h3>
-<h3>Pending Tasks: <span id="pendingCount">0</span></h3>
+<br><br>
 
-<ul id="taskList"></ul>
+Completed Tasks:
+<span id="completedCount">0</span>
+
+<br><br>
+
+Pending Tasks:
+<span id="pendingCount">0</span>
+
+<br><br>
+
+<table id="table">  
+    <tr>
+        <th>Task</th>
+        <th>Priority</th>
+        <th>Status</th>
+    </tr>
+</table>
 
 <script>
-function addTask(){
-    let taskText = document.getElementById("taskInput").value;
-    let priority = document.getElementById("priority").value;
 
-    if(taskText==""){
+let tasks = [];
+
+function addTask() {
+
+    let task =
+        document.getElementById("task").value;
+
+    let priority =
+        document.getElementById("priority").value;
+
+    if (task == "") {
         alert("Enter task");
         return;
     }
 
-    let li = document.createElement("li");
-    li.setAttribute("data-priority", priority);
+    tasks.push({
+        task: task,
+        priority: priority,
+        completed: false
+    });
 
-    li.innerHTML = `
-        ${taskText} - ${priority}
-        <button onclick="completeTask(this)">Complete</button>
+    document.getElementById("task").value = "";
+
+    displayTasks();
+}
+
+function displayTasks() {
+
+    let filter =
+        document.getElementById("filter").value;
+
+    let table =
+        document.getElementById("table");
+
+    table.innerHTML = `
+        <tr>
+            <th>Task</th>
+            <th>Priority</th>
+            <th>Status</th>
+        </tr>
     `;
 
-    document.getElementById("taskList").appendChild(li);
-    document.getElementById("taskInput").value="";
+    let completed = 0;
+    let pending = 0;
 
-    updateCounts();
-}
+    for (let i = 0; i < tasks.length; i++) {
 
-function completeTask(btn){
-    let task = btn.parentElement;
-    task.classList.toggle("completed");
+        if (filter == "All" ||
+            filter == tasks[i].priority) {
 
-    updateCounts();
-}
+            let status =
+                tasks[i].completed ?
+                "Completed" : "Pending";
 
-function filterTasks(){
-    let filter = document.getElementById("filter").value;
-    let tasks = document.querySelectorAll("#taskList li");
+            let row = `
+                <tr>
+                    <td>${tasks[i].task}</td>
+                    <td>${tasks[i].priority}</td>
+                    <td>
+                        <input type="checkbox"
+                        ${tasks[i].completed ? "checked" : ""}
+                        onchange="toggleTask(${i})">
 
-    tasks.forEach(task=>{
-        if(filter=="All" || task.getAttribute("data-priority")==filter){
-            task.style.display="block";
+                        ${status}
+                    </td>
+                </tr>
+            `;
+
+            table.innerHTML += row;
         }
-        else{
-            task.style.display="none";
+
+        if (tasks[i].completed) {
+            completed++;
         }
-    });
+        else {
+            pending++;
+        }
+    }
+
+    document.getElementById("completedCount").innerHTML =
+        completed;
+
+    document.getElementById("pendingCount").innerHTML =
+        pending;
 }
 
-function updateCounts(){
-    let tasks = document.querySelectorAll("#taskList li");
-    let completed = document.querySelectorAll(".completed").length;
+function toggleTask(index) {
 
-    document.getElementById("completedCount").innerHTML = completed;
-    document.getElementById("pendingCount").innerHTML = tasks.length - completed;
+    tasks[index].completed =
+        !tasks[index].completed;
+
+    displayTasks();
 }
+
 </script>
 
 </body>

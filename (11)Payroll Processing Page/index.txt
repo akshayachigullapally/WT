@@ -1,0 +1,173 @@
+//index.html
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payroll Processing</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            width: 400px;
+            margin: auto;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+        }
+
+        button {
+            padding: 8px 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Payroll Processing</h2>
+
+<form action="PayrollServlet" method="post"
+      onsubmit="return validateForm()">
+
+    <input type="text" name="name"
+           id="name"
+           placeholder="Employee Name">
+
+    <input type="number" name="basic"
+           id="basic"
+           placeholder="Basic Salary">
+
+    <input type="number" name="hra"
+           id="hra"
+           placeholder="HRA Percentage">
+
+    <input type="number" name="bonus"
+           id="bonus"
+           placeholder="Bonus Amount">
+
+    <button type="submit">Calculate Salary</button>
+
+</form>
+
+<script>
+
+function validateForm() {
+
+    let name =
+        document.getElementById("name").value;
+
+    let basic =
+        document.getElementById("basic").value;
+
+    let hra =
+        document.getElementById("hra").value;
+
+    let bonus =
+        document.getElementById("bonus").value;
+
+    if (name == "" ||
+        basic == "" ||
+        hra == "" ||
+        bonus == "") {
+
+        alert("Fill all fields");
+
+        return false;
+    }
+
+    if (basic <= 0 ||
+        hra < 0 ||
+        bonus < 0) {
+
+        alert("Enter valid values");
+
+        return false;
+    }
+
+    return true;
+}
+
+</script>
+
+</body>
+</html>
+
+
+
+//PayrollServlet.java
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class PayrollServlet extends HttpServlet {
+
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response)
+                          throws ServletException, IOException {
+
+        String name =
+            request.getParameter("name");
+
+        double basic =
+            Double.parseDouble(request.getParameter("basic"));
+
+        double hraPercent =
+            Double.parseDouble(request.getParameter("hra"));
+
+        double bonus =
+            Double.parseDouble(request.getParameter("bonus"));
+
+        double hra =
+            (basic * hraPercent) / 100;
+
+        double gross =
+            basic + hra + bonus;
+
+        request.setAttribute("name", name);
+        request.setAttribute("basic", basic);
+        request.setAttribute("hra", hra);
+        request.setAttribute("bonus", bonus);
+        request.setAttribute("gross", gross);
+
+        RequestDispatcher rd =
+            request.getRequestDispatcher("result.jsp");
+
+        rd.forward(request, response);
+    }
+}
+
+
+//result.jsp 
+
+<html>
+<head>
+    <title>Payroll Result</title>
+</head>
+
+<body>
+
+<h2>Payroll Details</h2>
+
+Employee Name: ${name}
+
+<br><br>
+
+Basic Salary: ₹${basic}
+
+<br><br>
+
+HRA Amount: ₹${hra}
+
+<br><br>
+
+Bonus Amount: ₹${bonus}
+
+<br><br>
+
+Gross Salary: ₹${gross}
+
+</body>
+</html>
