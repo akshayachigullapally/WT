@@ -1,0 +1,152 @@
+//index.html 
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial;
+        }
+
+        .login-box {
+            border: 1px solid black;
+            padding: 20px;
+            width: 300px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+        }
+
+        button {
+            padding: 8px 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <h2>Login</h2>
+
+    <form action="LoginServlet" method="post" onsubmit="return validateForm()">
+
+        <input type="text" id="username" name="username"
+               placeholder="Username">
+
+        <input type="password" id="password" name="password"
+               placeholder="Password">
+
+        <input type="checkbox" onclick="togglePassword()">
+        Show Password
+
+        <br><br>
+
+        <button type="submit">Login</button>
+
+    </form>
+
+</div>
+
+<script>
+
+function togglePassword() {
+
+    let password = document.getElementById("password");
+
+    if (password.type === "password") {
+        password.type = "text";
+    }
+    else {
+        password.type = "password";
+    }
+}
+
+function validateForm() {
+
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
+
+    if (username.length < 6) {
+        alert("Username must be at least 6 characters");
+        return false;
+    }
+
+    if (
+        password.search(/[A-Z]/) == -1 ||
+        password.search(/[a-z]/) == -1 ||
+        password.search(/[0-9]/) == -1
+    ) {
+        alert("Password must contain uppercase, lowercase and number");
+        return false;
+    }
+
+
+    
+
+    return true;
+}
+
+</script>
+
+</body>
+</html>
+
+
+
+//LoginServlet.java
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class LoginServlet extends HttpServlet {
+
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response)
+                          throws ServletException, IOException {
+
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        // Dummy credentials
+        if (username.equals("admin12") &&
+            password.equals("Admin123")) {
+
+            HttpSession session = request.getSession();
+
+            session.setAttribute("username", username);
+
+            response.sendRedirect("dashboard.jsp");
+        }
+        else {
+            response.getWriter().println("Invalid Username or Password");
+        }
+    }
+}
+
+
+
+//dashboard.jsp
+
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+
+<body>
+
+<h2>
+    Welcome ${sessionScope.username}
+</h2>
+
+</body>
+</html>
