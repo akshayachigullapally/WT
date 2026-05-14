@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie Records</title>
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+
+        .highlight {
+            background-color: yellow;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Movie List</h2>
+
+Filter by Genre:
+
+<select id="filter" onchange="loadXML()">
+    <option value="all">All</option>
+    <option value="Sci-Fi">Sci-Fi</option>
+    <option value="Action">Action</option>
+    <option value="Comedy">Comedy</option>
+</select>
+
+<br><br>
+
+<table id="table">
+    <tr>
+        <th>Title</th>
+        <th>Genre</th>
+        <th>Release Year</th>
+        <th>Rating</th>
+        <th>Language</th>
+    </tr>
+</table>
+
+<script>
+
+function loadXML() {
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("GET", "movies.xml", true);
+
+    xhr.onload = function() {
+
+        let xml = xhr.responseXML;
+
+        let movies = xml.getElementsByTagName("movie");
+
+        let filter = document.getElementById("filter").value;
+
+        let table = document.getElementById("table");
+
+        table.innerHTML = `
+            <tr>
+                <th>Title</th>
+                <th>Genre</th>
+                <th>Release Year</th>
+                <th>Rating</th>
+                <th>Language</th>
+            </tr>
+        `;
+
+        for (let i = 0; i < movies.length; i++) {
+
+            let title = movies[i].getElementsByTagName("title")[0].textContent;
+            let genre = movies[i].getElementsByTagName("genre")[0].textContent;
+            let year = movies[i].getElementsByTagName("year")[0].textContent;
+            let rating = movies[i].getElementsByTagName("rating")[0].textContent;
+            let language = movies[i].getElementsByTagName("language")[0].textContent;
+
+            if (filter === "all" || filter === genre) {
+
+                let rowClass = "";
+
+                if (rating >= 8) {
+                    rowClass = "highlight";
+                }
+
+                let row = `
+                    <tr class="${rowClass}">
+                        <td>${title}</td>
+                        <td>${genre}</td>
+                        <td>${year}</td>
+                        <td>${rating}</td>
+                        <td>${language}</td>
+                    </tr>
+                `;
+
+                table.innerHTML += row;
+            }
+        }
+    };
+
+    xhr.send();
+}
+
+window.onload = loadXML;
+
+</script>
+
+</body>
+</html>
