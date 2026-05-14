@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+
+<courses>
+
+    <course>
+        <code>CSE101</code>
+        <title>Programming in C</title>
+        <credits>4</credits>
+        <instructor>Ramesh</instructor>
+        <semester>1</semester>
+    </course>
+
+    <course>
+        <code>CSE102</code>
+        <title>Data Structures</title>
+        <credits>4</credits>
+        <instructor>Suresh</instructor>
+        <semester>2</semester>
+    </course>
+
+    <course>
+        <code>CSE201</code>
+        <title>Java Programming</title>
+        <credits>3</credits>
+        <instructor>Mahesh</instructor>
+        <semester>3</semester>
+    </course>
+
+    <course>
+        <code>CSE202</code>
+        <title>Database Systems</title>
+        <credits>4</credits>
+        <instructor>Anita</instructor>
+        <semester>4</semester>
+    </course>
+
+    <course>
+        <code>CSE301</code>
+        <title>Operating Systems</title>
+        <credits>4</credits>
+        <instructor>Kiran</instructor>
+        <semester>5</semester>
+    </course>
+
+    <course>
+        <code>CSE302</code>
+        <title>Computer Networks</title>
+        <credits>3</credits>
+        <instructor>Priya</instructor>
+        <semester>6</semester>
+    </course>
+
+    <course>
+        <code>CSE401</code>
+        <title>Machine Learning</title>
+        <credits>4</credits>
+        <instructor>Arun</instructor>
+        <semester>7</semester>
+    </course>
+
+    <course>
+        <code>CSE402</code>
+        <title>Cloud Computing</title>
+        <credits>3</credits>
+        <instructor>Divya</instructor>
+        <semester>8</semester>
+    </course>
+
+</courses>
