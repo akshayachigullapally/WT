@@ -2,36 +2,45 @@
 <html>
 <head>
     <title>Digital Library</title>
-    <style>
-        table, th, td{
-            border:1px solid black;
-            border-collapse: collapse;
-            padding:10px;
-        }
 
-        body{
-            text-align:center;
-            font-family:Arial;
+    <style>
+        table, th, td {
+            border:1px solid black;
+            border-collapse:collapse;
+            padding:5px;
         }
     </style>
 </head>
+
 <body>
 
 <h2>Digital Library</h2>
 
-<select id="genreFilter" onchange="filterBooks()">
-    <option value="All">All</option>
-    <option value="Technology">Technology</option>
-    <option value="History">History</option>
-    <option value="Fiction">Fiction</option>
-</select>
-
-<button onclick="sortBooks('year')">Sort by Year</button>
-<button onclick="sortBooks('rating')">Sort by Rating</button>
+Search by Title:
+<input type="text" id="search" onkeyup="loadXML()">
 
 <br><br>
 
-<table id="bookTable">
+Filter by Genre:
+<select id="filter" onchange="loadXML()">
+    <option value="all">All</option>
+    <option value="Fiction">Fiction</option>
+    <option value="Technology">Technology</option>
+    <option value="History">History</option>
+</select>
+
+<br><br>
+
+Sort By:
+<select id="sort" onchange="loadXML()">
+    <option value="none">None</option>
+    <option value="year">Year</option>
+    <option value="rating">Rating</option>
+</select>
+
+<br><br>
+
+<table id="table">
     <tr>
         <th>Title</th>
         <th>Author</th>
@@ -42,66 +51,78 @@
 </table>
 
 <script>
-let books=[];
 
-fetch("books.xml")
-.then(response => response.text())
-.then(data => {
-    let parser = new DOMParser();
-    let xml = parser.parseFromString(data,"text/xml");
+function loadXML() {
 
-    books = Array.from(xml.getElementsByTagName("book"));
-    displayBooks(books);
-});
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET","books.xml",true);
 
-function displayBooks(bookList){
-    let table = document.getElementById("bookTable");
+    xhr.onload = function() {
 
-    table.innerHTML = `
-    <tr>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Genre</th>
-        <th>Year</th>
-        <th>Rating</th>
-    </tr>`;
+        let xml = xhr.responseXML;
+        let books = xml.getElementsByTagName("book");
 
-    bookList.forEach(book=>{
-        table.innerHTML += `
-        <tr>
-            <td>${book.getElementsByTagName("title")[0].textContent}</td>
-            <td>${book.getElementsByTagName("author")[0].textContent}</td>
-            <td>${book.getElementsByTagName("genre")[0].textContent}</td>
-            <td>${book.getElementsByTagName("year")[0].textContent}</td>
-            <td>${book.getElementsByTagName("rating")[0].textContent}</td>
-        </tr>`;
-    });
+        let search = document.getElementById("search").value.toLowerCase();
+        let filter = document.getElementById("filter").value;
+        let sort = document.getElementById("sort").value;
+
+        let bookArray = [];
+
+        for(let i=0;i<books.length;i++){
+
+            let title = books[i].getElementsByTagName("title")[0].textContent;
+            let author = books[i].getElementsByTagName("author")[0].textContent;
+            let genre = books[i].getElementsByTagName("genre")[0].textContent;
+            let year = books[i].getElementsByTagName("year")[0].textContent;
+            let rating = books[i].getElementsByTagName("rating")[0].textContent;
+
+            if((filter=="all" || filter==genre) &&
+               title.toLowerCase().includes(search)){
+
+                bookArray.push({
+                    title, author, genre, year, rating
+                });
+            }
+        }
+
+        if(sort=="year"){
+            bookArray.sort((a,b)=>a.year-b.year);
+        }
+
+        if(sort=="rating"){
+            bookArray.sort((a,b)=>b.rating-a.rating);
+        }
+
+        let table = document.getElementById("table");
+
+        table.innerHTML = `
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Genre</th>
+                <th>Year</th>
+                <th>Rating</th>
+            </tr>
+        `;
+
+        for(let i=0;i<bookArray.length;i++){
+            table.innerHTML += `
+                <tr>
+                    <td>${bookArray[i].title}</td>
+                    <td>${bookArray[i].author}</td>
+                    <td>${bookArray[i].genre}</td>
+                    <td>${bookArray[i].year}</td>
+                    <td>${bookArray[i].rating}</td>
+                </tr>
+            `;
+        }
+    };
+
+    xhr.send();
 }
 
-function sortBooks(type){
-    books.sort((a,b)=>{
-        let x=parseFloat(a.getElementsByTagName(type)[0].textContent);
-        let y=parseFloat(b.getElementsByTagName(type)[0].textContent);
-        return x-y;
-    });
+window.onload = loadXML;
 
-    displayBooks(books);
-}
-
-function filterBooks(){
-    let genre=document.getElementById("genreFilter").value;
-
-    if(genre=="All"){
-        displayBooks(books);
-    }
-    else{
-        let filtered=books.filter(book =>
-            book.getElementsByTagName("genre")[0].textContent==genre
-        );
-
-        displayBooks(filtered);
-    }
-}
 </script>
 
 </body>

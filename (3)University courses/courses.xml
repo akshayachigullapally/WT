@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 
 <courses>
-
     <course>
         <code>CSE101</code>
         <title>Programming in C</title>
