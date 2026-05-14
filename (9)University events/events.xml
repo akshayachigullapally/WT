@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<events>
+
+    <event>
+        <name>Hackathon</name>
+        <department>CSE</department>
+        <date>2026-05-20</date>
+        <venue>Auditorium</venue>
+        <organizer>ACM</organizer>
+    </event>
+
+    <event>
+        <name>Tech Fest</name>
+        <department>ECE</department>
+        <date>2026-05-18</date>
+        <venue>Seminar Hall</venue>
+        <organizer>IEEE</organizer>
+    </event>
+
+    <event>
+        <name>Project Expo</name>
+        <department>CSE</department>
+        <date>2026-05-25</date>
+        <venue>Main Block</venue>
+        <organizer>CSI</organizer>
+    </event>
+
+    <event>
+        <name>Workshop</name>
+        <department>MECH</department>
+        <date>2026-05-15</date>
+        <venue>Lab 1</venue>
+        <organizer>Faculty Team</organizer>
+    </event>
+
+    <event>
+        <name>Cultural Fest</name>
+        <department>CIVIL</department>
+        <date>2026-05-30</date>
+        <venue>Open Ground</venue>
+        <organizer>Student Club</organizer>
+    </event>
+
+</events>

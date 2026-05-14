@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>University Events</title>
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>University Events</h2>
+
+Search by Department:
+
+<input type="text" id="search"
+       onkeyup="loadXML()">
+
+<br><br>
+
+<table id="table">
+    <tr>
+        <th>Event Name</th>
+        <th>Department</th>
+        <th>Date</th>
+        <th>Venue</th>
+        <th>Organizer</th>
+    </tr>
+</table>
+
+<script>
+
+function loadXML() {
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("GET", "events.xml", true);
+
+    xhr.onload = function() {
+
+        let xml = xhr.responseXML;
+
+        let events = xml.getElementsByTagName("event");
+
+        let data = [];
+
+        for (let i = 0; i < events.length; i++) {
+
+            data.push({
+                name:
+                    events[i].getElementsByTagName("name")[0].textContent,
+
+                department:
+                    events[i].getElementsByTagName("department")[0].textContent,
+
+                date:
+                    events[i].getElementsByTagName("date")[0].textContent,
+
+                venue:
+                    events[i].getElementsByTagName("venue")[0].textContent,
+
+                organizer:
+                    events[i].getElementsByTagName("organizer")[0].textContent
+            });
+        }
+
+        data.sort((a, b) =>
+            new Date(a.date) - new Date(b.date)
+        );
+
+        let search =
+            document.getElementById("search").value.toLowerCase();
+
+        let table =
+            document.getElementById("table");
+
+        table.innerHTML = `
+            <tr>
+                <th>Event Name</th>
+                <th>Department</th>
+                <th>Date</th>
+                <th>Venue</th>
+                <th>Organizer</th>
+            </tr>
+        `;
+
+        for (let i = 0; i < data.length; i++) {
+
+            if (data[i].department.toLowerCase().includes(search)) {
+
+                let row = `
+                    <tr>
+                        <td>${data[i].name}</td>
+                        <td>${data[i].department}</td>
+                        <td>${data[i].date}</td>
+                        <td>${data[i].venue}</td>
+                        <td>${data[i].organizer}</td>
+                    </tr>
+                `;
+
+                table.innerHTML += row;
+            }
+        }
+    };
+
+    xhr.send();
+}
+
+window.onload = loadXML;
+
+</script>
+
+</body>
+</html>
