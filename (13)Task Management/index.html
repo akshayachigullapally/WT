@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Management Dashboard</title>
+    <style>
+        body{
+            font-family: Arial;
+            text-align:center;
+        }
+
+        input, select, button{
+            padding:8px;
+            margin:5px;
+        }
+
+        li{
+            list-style:none;
+            padding:10px;
+            margin:10px;
+            border:1px solid black;
+            width:300px;
+            margin:auto;
+        }
+
+        .completed{
+            background-color:lightgreen;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Task Management Dashboard</h2>
+
+<input type="text" id="taskInput" placeholder="Enter task">
+<select id="priority">
+    <option value="Low">Low</option>
+    <option value="Medium">Medium</option>
+    <option value="High">High</option>
+</select>
+
+<button onclick="addTask()">Add Task</button>
+
+<br><br>
+
+<select id="filter" onchange="filterTasks()">
+    <option value="All">All Tasks</option>
+    <option value="Low">Low</option>
+    <option value="Medium">Medium</option>
+    <option value="High">High</option>
+</select>
+
+<h3>Completed Tasks: <span id="completedCount">0</span></h3>
+<h3>Pending Tasks: <span id="pendingCount">0</span></h3>
+
+<ul id="taskList"></ul>
+
+<script>
+function addTask(){
+    let taskText = document.getElementById("taskInput").value;
+    let priority = document.getElementById("priority").value;
+
+    if(taskText==""){
+        alert("Enter task");
+        return;
+    }
+
+    let li = document.createElement("li");
+    li.setAttribute("data-priority", priority);
+
+    li.innerHTML = `
+        ${taskText} - ${priority}
+        <button onclick="completeTask(this)">Complete</button>
+    `;
+
+    document.getElementById("taskList").appendChild(li);
+    document.getElementById("taskInput").value="";
+
+    updateCounts();
+}
+
+function completeTask(btn){
+    let task = btn.parentElement;
+    task.classList.toggle("completed");
+
+    updateCounts();
+}
+
+function filterTasks(){
+    let filter = document.getElementById("filter").value;
+    let tasks = document.querySelectorAll("#taskList li");
+
+    tasks.forEach(task=>{
+        if(filter=="All" || task.getAttribute("data-priority")==filter){
+            task.style.display="block";
+        }
+        else{
+            task.style.display="none";
+        }
+    });
+}
+
+function updateCounts(){
+    let tasks = document.querySelectorAll("#taskList li");
+    let completed = document.querySelectorAll(".completed").length;
+
+    document.getElementById("completedCount").innerHTML = completed;
+    document.getElementById("pendingCount").innerHTML = tasks.length - completed;
+}
+</script>
+
+</body>
+</html>
