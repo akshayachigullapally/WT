@@ -1,0 +1,213 @@
+//index.html
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>University Admission</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            width: 400px;
+            margin: auto;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+        }
+
+        button {
+            padding: 8px 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>University Admission Form</h2>
+
+<form action="AdmissionServlet" method="post"
+      onsubmit="return validateForm()">
+
+    <input type="text" name="name" placeholder="Name">
+
+    <input type="number" id="physics" name="physics"
+           placeholder="Physics Marks"
+           onkeyup="calculate()">
+
+    <input type="number" id="chemistry" name="chemistry"
+           placeholder="Chemistry Marks"
+           onkeyup="calculate()">
+
+    <input type="number" id="maths" name="maths"
+           placeholder="Mathematics Marks"
+           onkeyup="calculate()">
+
+    <input type="number" id="entrance" name="entrance"
+           placeholder="Entrance Exam Score"
+           onkeyup="calculate()">
+
+    <p>Total: <span id="total">0</span></p>
+
+    <p>Percentage: <span id="percentage">0</span>%</p>
+
+    <p>Eligibility Preview:
+        <span id="preview">Not Eligible</span>
+    </p>
+
+    <input type="hidden" name="percentage"
+           id="percentageValue">
+
+    <button type="submit">Submit</button>
+
+</form>
+
+<script>
+
+function calculate() {
+
+    let physics =
+        Number(document.getElementById("physics").value);
+
+    let chemistry =
+        Number(document.getElementById("chemistry").value);
+
+    let maths =
+        Number(document.getElementById("maths").value);
+
+    let entrance =
+        Number(document.getElementById("entrance").value);
+
+    let total = physics + chemistry + maths;
+
+    let percentage = total / 3;
+
+    document.getElementById("total").innerHTML = total;
+
+    document.getElementById("percentage").innerHTML =
+        percentage.toFixed(2);
+
+    document.getElementById("percentageValue").value =
+        percentage.toFixed(2);
+
+    if (percentage >= 70 && entrance >= 60) {
+        document.getElementById("preview").innerHTML =
+            "Eligible";
+    }
+    else {
+        document.getElementById("preview").innerHTML =
+            "Not Eligible";
+    }
+}
+
+function validateForm() {
+
+    let physics =
+        Number(document.getElementById("physics").value);
+
+    let chemistry =
+        Number(document.getElementById("chemistry").value);
+
+    let maths =
+        Number(document.getElementById("maths").value);
+
+    if (physics < 0 || physics > 100 ||
+        chemistry < 0 || chemistry > 100 ||
+        maths < 0 || maths > 100) {
+
+        alert("Marks must be between 0 and 100");
+
+        return false;
+    }
+
+    return true;
+}
+
+</script>
+
+</body>
+</html>
+
+
+//AdmissionServlet.java
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class AdmissionServlet extends HttpServlet {
+
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response)
+                          throws ServletException, IOException {
+
+        String name = request.getParameter("name");
+
+        int physics =
+            Integer.parseInt(request.getParameter("physics"));
+
+        int chemistry =
+            Integer.parseInt(request.getParameter("chemistry"));
+
+        int maths =
+            Integer.parseInt(request.getParameter("maths"));
+
+        int entrance =
+            Integer.parseInt(request.getParameter("entrance"));
+
+        double percentage =
+            Double.parseDouble(request.getParameter("percentage"));
+
+        String result;
+
+        if (percentage >= 70 && entrance >= 60) {
+            result = "Eligible for Admission";
+        }
+        else {
+            result = "Not Eligible for Admission";
+        }
+
+        request.setAttribute("name", name);
+        request.setAttribute("physics", physics);
+        request.setAttribute("chemistry", chemistry);
+        request.setAttribute("maths", maths);
+        request.setAttribute("entrance", entrance);
+        request.setAttribute("percentage", percentage);
+        request.setAttribute("result", result);
+
+        RequestDispatcher rd =
+            request.getRequestDispatcher("result.jsp");
+
+        rd.forward(request, response);
+    }
+}
+
+
+//result.jsp
+
+<html>
+<head>
+    <title>Admission Result</title>
+</head>
+
+<body>
+
+<h2>Admission Result</h2>
+
+Name: ${name} <br><br>
+
+Physics: ${physics} <br><br>
+
+Chemistry: ${chemistry} <br><br>
+
+Mathematics: ${maths} <br><br>
+
+Entrance Score: ${entrance} <br><br>
+
+Percentage: ${percentage}% <br><br>
+
+Result: ${result}
+
+</body>
+</html>
