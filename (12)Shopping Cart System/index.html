@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shopping Cart</title>
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 8px;
+            text-align: center;
+        }
+
+        input {
+            width: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Dynamic Shopping Cart</h2>
+
+<table>
+    <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+    </tr>
+
+    <tr>
+        <td>Laptop</td>
+        <td>50000</td>
+        <td>
+            <input type="number" id="p1"
+                   value="0"
+                   onchange="calculate()">
+        </td>
+        <td id="s1">0</td>
+    </tr>
+
+    <tr>
+        <td>Mobile</td>
+        <td>20000</td>
+        <td>
+            <input type="number" id="p2"
+                   value="0"
+                   onchange="calculate()">
+        </td>
+        <td id="s2">0</td>
+    </tr>
+
+    <tr>
+        <td>Headphones</td>
+        <td>2000</td>
+        <td>
+            <input type="number" id="p3"
+                   value="0"
+                   onchange="calculate()">
+        </td>
+        <td id="s3">0</td>
+    </tr>
+
+    <tr>
+        <td>Keyboard</td>
+        <td>1500</td>
+        <td>
+            <input type="number" id="p4"
+                   value="0"
+                   onchange="calculate()">
+        </td>
+        <td id="s4">0</td>
+    </tr>
+
+    <tr>
+        <td>Mouse</td>
+        <td>1000</td>
+        <td>
+            <input type="number" id="p5"
+                   value="0"
+                   onchange="calculate()">
+        </td>
+        <td id="s5">0</td>
+    </tr>
+
+</table>
+
+<br>
+
+Grand Total:
+₹<span id="grand">0</span>
+
+<br><br>
+
+Discount:
+₹<span id="discount">0</span>
+
+<br><br>
+
+Final Payable Amount:
+₹<span id="final">0</span>
+
+<script>
+
+function calculate() {
+
+    let q1 =
+        document.getElementById("p1").value;
+
+    let q2 =
+        document.getElementById("p2").value;
+
+    let q3 =
+        document.getElementById("p3").value;
+
+    let q4 =
+        document.getElementById("p4").value;
+
+    let q5 =
+        document.getElementById("p5").value;
+
+    let s1 = q1 * 50000;
+    let s2 = q2 * 20000;
+    let s3 = q3 * 2000;
+    let s4 = q4 * 1500;
+    let s5 = q5 * 1000;
+
+    document.getElementById("s1").innerHTML = s1;
+    document.getElementById("s2").innerHTML = s2;
+    document.getElementById("s3").innerHTML = s3;
+    document.getElementById("s4").innerHTML = s4;
+    document.getElementById("s5").innerHTML = s5;
+
+    let total =
+        s1 + s2 + s3 + s4 + s5;
+
+    document.getElementById("grand").innerHTML =
+        total;
+
+    let discount = 0;
+
+    if (total > 2000) {
+        discount = total * 0.10;
+    }
+
+    document.getElementById("discount").innerHTML =
+        discount;
+
+    let finalAmount =
+        total - discount;
+
+    document.getElementById("final").innerHTML =
+        finalAmount;
+}
+
+</script>
+
+</body>
+</html>
