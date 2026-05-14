@@ -1,0 +1,156 @@
+//index.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Currency Converter</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            width: 400px;
+            margin: auto;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+        }
+
+        button {
+            padding: 8px 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Currency Converter</h2>
+
+<form action="CurrencyServlet" method="post"
+      onsubmit="return validateForm()">
+
+    <input type="number" id="amount"
+           name="amount"
+           placeholder="Enter Amount">
+
+    <select name="fromCurrency">
+        <option value="INR">INR</option>
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+    </select>
+
+    <select name="toCurrency">
+        <option value="USD">USD</option>
+        <option value="INR">INR</option>
+        <option value="EUR">EUR</option>
+    </select>
+
+    <button type="submit">Convert</button>
+
+</form>
+
+<script>
+
+function validateForm() {
+
+    let amount =
+        document.getElementById("amount").value;
+
+    if (amount == "" || amount <= 0) {
+
+        alert("Enter valid amount");
+
+        return false;
+    }
+
+    return true;
+}
+
+</script>
+
+</body>
+</html>
+
+//CurrencyServlet.java
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class CurrencyServlet extends HttpServlet {
+
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response)
+                          throws ServletException, IOException {
+
+        double amount =
+            Double.parseDouble(request.getParameter("amount"));
+
+        String from =
+            request.getParameter("fromCurrency");
+
+        String to =
+            request.getParameter("toCurrency");
+
+        double converted = amount;
+
+        // Predefined rates
+
+        if (from.equals("INR") && to.equals("USD")) {
+            converted = amount * 0.012;
+        }
+
+        else if (from.equals("USD") && to.equals("INR")) {
+            converted = amount * 83;
+        }
+
+        else if (from.equals("INR") && to.equals("EUR")) {
+            converted = amount * 0.011;
+        }
+
+        else if (from.equals("EUR") && to.equals("INR")) {
+            converted = amount * 90;
+        }
+
+        else if (from.equals("USD") && to.equals("EUR")) {
+            converted = amount * 0.92;
+        }
+
+        else if (from.equals("EUR") && to.equals("USD")) {
+            converted = amount * 1.08;
+        }
+
+        request.setAttribute("amount", amount);
+        request.setAttribute("from", from);
+        request.setAttribute("to", to);
+        request.setAttribute("converted", converted);
+
+        RequestDispatcher rd =
+            request.getRequestDispatcher("result.jsp");
+
+        rd.forward(request, response);
+    }
+}
+
+
+//result.jsp
+
+<html>
+<head>
+    <title>Conversion Result</title>
+</head>
+
+<body>
+
+<h2>Currency Conversion Result</h2>
+
+Amount: ${amount} ${from}
+
+<br><br>
+
+Converted Amount:
+${converted} ${to}
+
+</body>
+</html>
