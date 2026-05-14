@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Character Counter</title>
+    <style>
+        body{
+            text-align:center;
+            font-family:Arial;
+        }
+
+        textarea{
+            width:400px;
+            height:150px;
+        }
+
+        .red{
+            color:red;
+            font-weight:bold;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Real-Time Character Counter Tool</h2>
+
+<textarea id="text" onkeyup="countText()" 
+placeholder="Type your text here..."></textarea>
+
+<h3 id="charCount">Characters: 0</h3>
+<h3 id="wordCount">Words: 0</h3>
+<h3 id="sentenceCount">Sentences: 0</h3>
+
+<script>
+function countText(){
+    let text = document.getElementById("text").value;
+
+    // Character count
+    let chars = text.length;
+
+    // Word count
+    let words = text.trim()=="" ? 0 : text.trim().split(/\s+/).length;
+
+    // Sentence count
+    let sentences = text.split(/[.!?]+/).filter(s => s.trim()!="").length;
+
+    let charElement = document.getElementById("charCount");
+
+    charElement.innerHTML = "Characters: " + chars;
+    document.getElementById("wordCount").innerHTML = "Words: " + words;
+    document.getElementById("sentenceCount").innerHTML = "Sentences: " + sentences;
+
+    // Highlight red if characters exceed 200
+    if(chars > 200){
+        charElement.classList.add("red");
+    }
+    else{
+        charElement.classList.remove("red");
+    }
+}
+</script>
+
+</body>
+</html>
