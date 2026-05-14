@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<products>
+
+    <product>
+        <id>101</id>
+        <name>Laptop</name>
+        <category>Electronics</category>
+        <price>55000</price>
+        <stock>3</stock>
+    </product>
+
+    <product>
+        <id>102</id>
+        <name>Mobile</name>
+        <category>Electronics</category>
+        <price>25000</price>
+        <stock>10</stock>
+    </product>
+
+    <product>
+        <id>103</id>
+        <name>Chair</name>
+        <category>Furniture</category>
+        <price>4000</price>
+        <stock>2</stock>
+    </product>
+
+    <product>
+        <id>104</id>
+        <name>Table</name>
+        <category>Furniture</category>
+        <price>7000</price>
+        <stock>8</stock>
+    </product>
+
+    <product>
+        <id>105</id>
+        <name>Notebook</name>
+        <category>Stationery</category>
+        <price>100</price>
+        <stock>15</stock>
+    </product>
+
+</products>
