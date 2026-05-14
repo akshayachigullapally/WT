@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<employees>
+
+    <employee>
+        <id>101</id>
+        <name>Arun</name>
+        <department>HR</department>
+        <salary>40000</salary>
+        <experience>3</experience>
+    </employee>
+
+    <employee>
+        <id>102</id>
+        <name>Priya</name>
+        <department>IT</department>
+        <salary>65000</salary>
+        <experience>7</experience>
+    </employee>
+
+    <employee>
+        <id>103</id>
+        <name>Rahul</name>
+        <department>Finance</department>
+        <salary>55000</salary>
+        <experience>6</experience>
+    </employee>
+
+    <employee>
+        <id>104</id>
+        <name>Sneha</name>
+        <department>Marketing</department>
+        <salary>45000</salary>
+        <experience>2</experience>
+    </employee>
+
+    <employee>
+        <id>105</id>
+        <name>Kiran</name>
+        <department>IT</department>
+        <salary>70000</salary>
+        <experience>8</experience>
+    </employee>
+
+</employees>

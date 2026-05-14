@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Details</title>
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+
+        button {
+            margin: 10px;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Employee Details</h2>
+
+<button onclick="sortSalary()">
+    Sort by Salary
+</button>
+
+<button onclick="filterExperience()">
+    Experience > 5 Years
+</button>
+
+<br><br>
+
+<table id="table">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Salary</th>
+        <th>Experience</th>
+    </tr>
+</table>
+
+<script>
+
+let employeeData = [];
+
+function loadXML() {
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("GET", "employees.xml", true);
+
+    xhr.onload = function() {
+
+        let xml = xhr.responseXML;
+
+        let employees = xml.getElementsByTagName("employee");
+
+        employeeData = [];
+
+        for (let i = 0; i < employees.length; i++) {
+
+            employeeData.push({
+                id: employees[i].getElementsByTagName("id")[0].textContent,
+                name: employees[i].getElementsByTagName("name")[0].textContent,
+                department: employees[i].getElementsByTagName("department")[0].textContent,
+                salary: employees[i].getElementsByTagName("salary")[0].textContent,
+                experience: employees[i].getElementsByTagName("experience")[0].textContent
+            });
+        }
+
+        display(employeeData);
+    };
+
+    xhr.send();
+}
+
+function display(data) {
+
+    let table = document.getElementById("table");
+
+    table.innerHTML = `
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Salary</th>
+            <th>Experience</th>
+        </tr>
+    `;
+
+    for (let i = 0; i < data.length; i++) {
+
+        let row = `
+            <tr>
+                <td>${data[i].id}</td>
+                <td>${data[i].name}</td>
+                <td>${data[i].department}</td>
+                <td>${data[i].salary}</td>
+                <td>${data[i].experience}</td>
+            </tr>
+        `;
+
+        table.innerHTML += row;
+    }
+}
+
+function sortSalary() {
+
+    employeeData.sort((a, b) => a.salary - b.salary);
+
+    display(employeeData);
+}
+
+function filterExperience() {
+
+    let filtered =
+        employeeData.filter(emp => emp.experience > 5);
+
+    display(filtered);
+}
+
+window.onload = loadXML;
+
+</script>
+
+</body>
+</html>
