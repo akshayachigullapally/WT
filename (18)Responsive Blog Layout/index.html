@@ -2,143 +2,166 @@
 <html>
 <head>
     <title>Responsive Blog Layout</title>
+
     <style>
+
         body {
             margin: 0;
             font-family: Arial;
-            background: white;
+            background-color: white;
             color: black;
         }
 
         header {
-            background: rgb(238, 232, 120);
+            background-color: #333;
             color: white;
+            padding: 15px;
             text-align: center;
-            padding: 20px;
         }
 
         nav {
-            background: rgb(235, 214, 156);
-            color: white;
-            text-align: center;
+            background-color: #555;
             padding: 10px;
+            display: flex;
+            gap: 20px;
         }
 
         nav a {
             color: white;
-            margin: 10px;
             text-decoration: none;
         }
 
         .container {
             display: flex;
-            flex-wrap: wrap;
+            gap: 20px;
             padding: 20px;
         }
 
         .content {
             flex: 3;
-            background: #f4f4f4;
-            padding: 20px;
         }
 
         .sidebar {
             flex: 1;
-            background: lightgray;
-            padding: 20px;
+            border-left: 1px solid gray;
+            padding-left: 15px;
         }
 
         footer {
-            background: rgb(200, 194, 194);
+            background-color: #333;
             color: white;
             text-align: center;
-            padding: 15px;
+            padding: 10px;
         }
 
         button {
+            padding: 8px 12px;
             margin-top: 10px;
-            padding: 8px;
         }
 
-        /* Dark Mode */
         .dark {
-            background: black;
+            background-color: #121212;
             color: white;
         }
 
-        .dark .content {
-            background: #333;
-            color: white;
+        .dark nav {
+            background-color: #222;
         }
 
         .dark .sidebar {
-            background: #555;
-            color: white;
+            border-color: white;
         }
 
-        @media(max-width:768px){
-            .container{
+        @media (max-width: 700px) {
+
+            .container {
                 flex-direction: column;
             }
         }
+
     </style>
 </head>
+
 <body>
 
-    <!-- Header -->
-    <header>
-        <h1>My Blog</h1>
-        <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
-    </header>
+<header>
+    <h1>My Blog</h1>
 
-    <!-- Navigation -->
-    <nav>
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
-    </nav>
+    <button onclick="toggleDarkMode()">
+        Toggle Dark Mode
+    </button>
+</header>
 
-    <!-- Main Content -->
-    <div class="container">
-        
-        <div class="content">
-            <h2>Blog Post Title</h2>
-            <p>This is the main blog content area where articles are displayed.</p>
-        </div>
+<nav>
+    <a href="#">Home</a>
+    <a href="#">Blogs</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+</nav>
 
-        <div class="sidebar">
-            <h3>Recent Posts</h3>
-            <ul>
-                <li>Post 1</li>
-                <li>Post 2</li>
-                <li>Post 3</li>
-            </ul>
-        </div>
+<div class="container">
+
+    <div class="content">
+
+        <h2>Blog Title</h2>
+
+        <p>
+            This is the main blog content area.
+            You can add articles, images, and text here.
+        </p>
+
+        <p>
+            Responsive layout is created using Flexbox.
+        </p>
 
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>© 2026 My Blog Website</p>
-    </footer>
+    <div class="sidebar">
 
-    <script>
-        // Load saved theme
-        if(localStorage.getItem("theme") === "dark"){
-            document.body.classList.add("dark");
-        }
+        <h3>Recent Posts</h3>
 
-        function toggleDarkMode(){
-            document.body.classList.toggle("dark");
+        <ul>
+            <li>JavaScript Basics</li>
+            <li>CSS Flexbox Guide</li>
+            <li>HTML Forms</li>
+            <li>Dark Mode Design</li>
+        </ul>
 
-            if(document.body.classList.contains("dark")){
-                localStorage.setItem("theme", "dark");
-            } 
-            else{
-                localStorage.setItem("theme", "light");
-            }
-        }
-    </script>
+    </div>
+
+</div>
+
+<footer>
+    © 2026 My Blog
+</footer>
+
+<script>
+
+function toggleDarkMode() {
+
+    document.body.classList.toggle("dark");
+
+    if (document.body.classList.contains("dark")) {
+
+        localStorage.setItem("theme", "dark");
+    }
+    else {
+
+        localStorage.setItem("theme", "light");
+    }
+}
+
+window.onload = function() {
+
+    let theme = localStorage.getItem("theme");
+
+    if (theme == "dark") {
+
+        document.body.classList.add("dark");
+    }
+}
+
+</script>
 
 </body>
 </html>
