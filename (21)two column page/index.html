@@ -2,142 +2,266 @@
 <html>
 <head>
     <title>Signup Page</title>
+
     <style>
-        body{
-            margin:0;
+
+        body {
+            margin: 0;
             font-family: Arial;
         }
 
-        .container{
-            display:flex;
-            height:100vh;
+        .container {
+            display: flex;
+            height: 100vh;
         }
 
-        .left{
-            width:50%;
+        .left {
+            flex: 1;
+            background-image: url("https://picsum.photos/800/800");
+            background-size: cover;
+            background-position: center;
         }
 
-        .left img{
-            width:100%;
-            height:100%;
+        .right {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .right{
-            width:50%;
-            text-align:center;
-            padding-top:100px;
-            background-color:#f2f2f2;
+        form {
+            width: 300px;
         }
 
-        input{
-            width:250px;
-            padding:8px;
-            margin:8px;
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
         }
 
-        button{
-            width:270px;
-            padding:10px;
-            background-color:blue;
-            color:white;
-            border:none;
+        button {
+            padding: 10px;
+            width: 100%;
         }
 
-        span{
-            color:red;
-            font-size:14px;
+        .message {
+            font-size: 14px;
         }
+
+        .red {
+            color: red;
+        }
+
+        .green {
+            color: green;
+        }
+
     </style>
 </head>
+
 <body>
 
 <div class="container">
 
-    <!-- Left Side Image -->
-    <div class="left">
-        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJABAwMBIgACEQEDEQH/xAAcAAACAgMBAQAAAAAAAAAAAAAAAQUGAwQHAgj/xABFEAABAwMCAwYCBwYEAwkBAAABAgMEAAURBiESMWETFCJBUXEHgRUyQnKRocEjM1JisfBTstHhJEOSJjREY3OCosLSFv/EABoBAAIDAQEAAAAAAAAAAAAAAAABAgMFBAb/xAAvEQACAQMDAgMHBAMAAAAAAAAAAQIDESEEEjFBURNxoQUyYYHR4fAjUpHBIrHC/9oADAMBAAIRAxEAPwDr9FKnXScwU6VFAHqilTpAFFFFABTpUUDHRRRQAU6VFIDnGu7Q5qrW1tssaSYz0W3uyw7gnhJWkDlvzA351qxdWam0W8iDrOE5LiZ4UTWtyR0VsFexwr3qxaYHffiVqaZzENhiGg+mfEr8xVtlCNNbdiTmG3mFghSHE8SSOoNXuso2pyjdW+ffBZhLJp2W9W6+RhKtUpuQ358JwpB9FA7g1IVzq9fDWRb5P0roaeuJIG/d1OHhPRKjnborI9q8WX4kOw5f0ZrSEq3zEbGQlshB6qTuR94ZHtR4Cmt1F3+HVBY6RmsMSZGloWuJIafS2soWppYUEqGxBxyI9KSZTC4nfGHEOslHaJW2oKSoc9iK4cwi46ddYlL7xAecHaJuUYFTcjjWk8T6FZylKSrGKjSoOqnboQbSdmd4p1zrTfxQgSHjCvqmozyVFCZjOe7vAEji33SDjO+3tXQ0LS4hK21BSFDKVJOQR0qM6c6btNWGe6KVOqwCnSopDHRRRQAU6VFADp0qKBjopZopDNWiiirSgdFKmKBhTpUUAeqKVOkAUfrUder3bbJGS/c5KWQvZDfNTqvRKRuT7VHQNUGTcY8OZaLhbxLCu6uSgn9qQMlOASUnG4B9Kkqc5K6Q7Fio8s+VFQP0jeUaoEN63R/ol0ENSkOFTgWE5yocgDuP1qDdhpN8E/RtRWhfpot9kuM1W3YRXHB7hJP6Uc4EQHwqIkwb3eDv3+6POBXqhJwn9az36JLdubc5lD7wCAlvsTu2vJ3O3LcH5Vm+G0UQPh3aUYwpyP2qs+ZWeL9amZU2Pb7Y4/JdUhCjwBSU5OTsMCrd7VaTir5t/Q6sdy2t2MzYfZaQo8ykFQ9DWpeLNatRQ1R7tEbeSkbE7KbPqlXNPy/OtTSCn0W15b8jvDIVltRXk43555eXOpmK+3NjBbSXGiT4kLTwqSR5EfqKqnenN2eV1Q6bvFM5bM0fe9HOOu2O5KcsrxKX2HCOJIOwyORP8wweQxXTkWyO7bGYUllLjSG0pKVJ9Bj8etRmpUrW3DhqOUyZjaT90HJ/pVkBFWV686kIuTznJKOZM5Rqz4UtvlcqxKCFk5LKvPoP7/GqTar3qTQ8sx+FaGArJiPgltR6eaT7Y612zT2r7LqJxbNvlJ7y2ohUd3wubHcgeY6ity8WO3XqOWp8dtYxgK4dx/t0rppa9x/S1Mbr1E4Ne6V3S2vbRqAIjqUIU47d3eUPEf5Ffa/I9Ktlca1Z8LpdvDki0K7wwN+zP1h/U/1+Vaem/iDedPLEK7NuTYyNuze/fNjoo8x0OfcVc9BCtHfpJX+HUSaeDuVFQ+n9R2rULBctcpKykeNlXhcb+8nmPflUxWZKMoPbJWYwp0qKiA6KKKACnSooAdFFFAGpTpUVaVDooopAOilTO3OgYVoX66t2ayzLi6kqEdri7Mc1nOEpHucfjW4y80+32jLiHEb+JCgRt1qpfEq4R0ackR0r4ni8z4RvydQdz+lShBzkooTko8m7pqwCIgXi9KTIvb6eN6S4c9iDyQ3n6qRyqM1Tf4JvmnygrW2xOUtbiRt+7WNs8+da11usu4Elxzhazs2g4GP1+dRiGVLUOXPbIzitShpM76r/AC1jklq84OoQZUecyH4z6XGztkHl8qyiClMpUgvukKGA3xeEbAfpVR0ayhmY6UblTe6sbncc6m4Wo2JUlMZxtTb3bFtKQrmQCc+2BWZXoShNqGUjpoVoTim8XJKql8U5So2hbmlAJXICWEAcyVqA2+WattUz4h/8VO0xaufe7s2pY9UNjJ/rSpe+vzgtXJco8RMS2RYTfCnsW0NpHQDH6ViksMS4qoU5vibJ5+h8jWabkPIPZcWE5SvGcbjPl8+uK9vfuiCoElXh23rnjJ3LJwxcio1nNst81EVx18Op8CAlJUNj67Hn54rctjRZhsJ2SQnIHCU439CSR7VsFtxrdtWR6Vm42yvCsBWPlUpTcndu5CMFHjFj1wJXwlaQrG4JG+awXSUxDt0mTLcLcdtpSlrG+E45itwY9RUNq22PXrT062xXksuyWuzC1jIxkZB6EbfOq42bVy04pN0hIt8FmbanUXW1d4S8LrBz3mOgbKBSD8+h9Kn9M/Eq425ls3kfSVtU+tlqW3gSBw4OVIzvt7ee5quhi9aJuDDZW7Z5CW18cgkuxpyxkpGMYyR4eRI57VKNz7Fe5UWTcWf/AOYv7iEvx57KR3eRnkpQ5DPqfbiNbjgpxtUW6Pfr+eXzRFHYrPeLdeoaZVslNSWTtxJOSnoQdwfeonUujLVf0Ht2EtveTiRv/f4fOuRSrTeNHzorqlrtp/aH6WilTrMnO7YKRsN/Dgjlvg4q76b+JyS3EZ1Ux3JUhAcZmI3acTkjcDdO4Pry3xXO9FWpfq6WV18Ofv8A77obipLJSr7om+aXliZCLq0NnKH45IWj+/7FT2lvio42UxtSNFxI8IlMp8Q++nz90/hXXELjzI6XGlNvsuDKVJIUlQ9QapWq/hvbruDIhpEaVzykYCv9fn+VdNP2jQ1S8PWxz+5cohaUecr1LVb50W5RkSYEht+OtOUrbUCD0962apXwwsT9ht1wblqSpbkrYoVnZIAz75zV1rMr0406soQd0uorp5QU6VFUjHRRRQAUUUUAatFKnVpUFOlRQA68rbS6lTaxlCklJ3xsRivVBIAJJwBuTSYFG0fog6Lt98Pe3ne8BZbCvClCEg8J57q33P8ASo56OrsuGagLPCHOE7nHMZHrXS7jJ7KE660UuENKUgcwSAfyrmCXFPNPOOqJcWCoqO5JxuTXf7NTtI5tdbDMAdKzgbJrJDkMPLcQ08hamjhSUqBKT19K12qjtFx+xYlkklXeFI7RX2gPP8zW3JKzORwW1vsdF0kR313/ANL/AOwqOtiP+0cZz+KU7+STW1p+U3EckyHw4W0MkrDbalqO42CU+In2rHbHOO42RbzTsZ19yStLEhPA5wgb+EnqPxFYlSoo1Jp9V/TLaEHKnF9mXOqdO/434sWaLzRb7e9KI9Co8A/SrjjyrnWqJt20frZ7URthm2uTFbYWtJ/cJHlkfVORnJGDnGRXFTy2lzZ2NKPNzo0h4pewncYxiklaFdmlCeABeSAai7BqSyaqY7S2yAXwMrZX4XUe4PP3GRUitpTasncdKq2pYaswk5LyIa7OSGb2VgqbOE9mrOyhjl+NWJxsrUg4wcb1ijrKlhKkhQH8W+KytrDj6lAnYcqU27ccDilz3NW0xpcd2cqU72iHZBUyM54UcIwPxBrLPV+0jpccWhla+FRSopPER4ckYwOfzxWCC46qWouA5I9efyrcS4xLbWlK23UglCgkgjPIg1zU63jLfYvcNj2kMt5mew/CmxzLZxwuxpLQDoH3eTg6j8zVIv8A8NFJYfmaTebdbkMFHdJXjCUq3y0o/VORtnruMmukLgltxtcYIX2Zy2h4Z4NseFWCU7flttWzDZUzHCFY4skkJ5DJJwPxrrpaidF3g/oJ5OC26+3LTC5cEAohsNI7e0XbBLhOEr7PblnJ9MHzqRRZ7TfXXxplz6IuqmVNPWe4JBSoKG4bKuXr022TXWb/AKdtWoInYXeKh0AeFzktHVKuY/vNcq1V8PrrbkPvxEKu0dbjay/jMxgJ58P8WQfL0Gw51s6XV0a0udk/R+fR/Oz7MA0Kq8WbW1vsqWpkJhxs97ivK40LUlBKlp8sEgcvXGTXaXVhttSlckjNcz+Fd+n3S6TbfJeVMgw0ExpElH7dHiwEk7+Wc5z7+VX++ulm1SVjmWyke52/WuL2nulqVGSSdlx1v17/AMkZy2xbNWyJxbGFKHiXlxXXiJNSFYo7QYjtNj7CQPwFZK427tspgrRSPVFKnSJBTpUUhjooooA1KKKKtKh0UqdABSWOJtaf4gRTooYNXKJZ05k3DHJEJ0Yz7VFsEd3cOduA/wBK6MiM0tLyVtpAcTwq28jz3qtz9MvMocMFReQoHCFHCht6+fzrS02sg274vY5NTppQSis2Kqyal7VbZM1X7BrCM+JZ+qPf1NTNn0m21h25L7RQ/wCUD4fmfP8Ap71amWPAlDaUobGwAGAB6Cp6r2hFYp/yKOlc3eRHWq1N24cQUVOqGFKI/p+FSQhoW83IcbSHGwQhwp8SQcZwfLOB+FQupdXWTSoSJ7xckqGUx2QFOEeu+MfM1yHVmurxfkradCGrU4eEMMLI4h/MvmfYgDoazoUauplfp3Z3wpxpqx0fVfxKtNh/4e3p7/JORxN7tI9cq5Kx6D5kVU7T8Tb1FdU/e4zdwtj5JJZbDamh54BPL3/6qosBhfZuSY6wuM0QVtLb4lc9hwfVPvnbpyr0yGpLz01oPoWjxAOPDB8iO1P+Xz5A1pw0NCMbNX+P5wTudKd0np/VSBeNC3IW+4IPGWkEpCVdUjxIPUbdDXq3a9vOmZKLZryAvh3CJzSc8QHMkDZfunfHlXNmHZEOT34PG0zEjibW1lJPThG4T1xjoav1p+IsadDTa9cQG5MZ3YS0Nhbauqk+vVO4PkKrq6OcVxvj6ryfUZ1G2TYF0iiZa5TUhlaeFK2lZAPmOhpkKbVg7E+Yrmj+iplrUL98NbrxtODjMbtQoOJ8gFHZXQK5etSunviXGeeFt1XFNrno8KlLSQ2T1zuj55HWs96d2cqT3Lquq80JxTL62tIR2ikgK5ZqGlWjL6pdtfVClHdSk7oX5+JPn8qmTwOMILCkrQRkKByCKxYOcYrnpvbdxIzTeGR7F8dirSxfWO7LOyZCf3S/n5exqeSsKAKSCDyINaklpDqS26hK0FOFJUM5qIFtl25XHZXh2fMxHTlH/t/hNPbCfGH6fYFKUecmTXNtl3bSlyhW9akSXGh2ZSrhKsKB4c+XEBw561xzTerb9pUqjOP9oljPb22cShSAP8Mnf5f/ABPOu2QL0zIc7u+lUWUPrMu7En+U+YrFqLTNp1HHDd0ipcWgYQ8nwuI9lfpy9a6NNWhQfh14XiyxNSyjDpOZar3CN8tsVDTszwPnhAXxJyOFRHPBJ39K29QnjZisf40lAPsNz/SvOmbBD07axb4JcUgKK1KcIKlE+uAB+VK5HtbvBa5htK3T+GBVDcHXbhx0vzZcEK3uWN2iiikIKdKigD1RSp0AFFFFAGrRSoq0rHTpU6QBTFeaeaAIiww7lb1PRpslMqGkJ7s+Th0bbpUMb48lZ38/WplCC59UGszUfO6zt6CtlKUpHhFVOSXBZtcssxNRwnde5rVvcGRcba9Fizn4LqxgPsBJUnpuD+h6ipKiq7u9y1JI+c9TaSu+lgt26truEZwqV2yeIt5/iWrPEk+xHueRgWobgUlTDyY61j9y8scShjnw48Q8gCMnyBr6mUhKk8KhlJ8jvXOtV/C61zVOzLQlESUrJ7FaiI61epA3Hy26Vq6fXr3amCLj2ORqVHnSmmeN9taMgBtrCCR5JT9jyBPzOBtXp3Mpxr6QbcYjNYSH0uZ29c5IWo5J8IyetbV1tl6tbjka/R1RWCoDtVAJSQOQQpIwsY5J3x6DnWklP7NTNvQJbPNSnBhQ5ZPDnwehOT97yrWg7q6f55kT0k8SUZaYcgNHZSlnb08YwsH+UAD+WvScyFLUzJU7GRv3dLXiKejY8OPVQ386BhxYZt8lplKhhbeTgn04sftPYjzwB50gW5bqYkcLiFOziscCFEblSwN0Y6kgEfZq6JJG5YLzcbQ65MsMhcJBV42XnOJl0+mTgFX59avzOpdMa2aRbtWQ0W+4gcKHc8OD5cLnNP3Vbe9VPR9pZ1PqNi13Bt5TTUdbinw4OJQ2A5ZTjJ6nqat91+FHEwEQJyVtIBwy82AeuFjcE/h0ri1M9L4lqj2y7r69fmNuxrrtGr9AL7WwPm72UbmMpJKkD14RuPdG3qmrXpTXtk1MltsOCLOVyjvEZUf5Fcle3PpXOrXqDUeiprkBtLk2GzkmJJBCkoGxKTvge2R0FWFcPR/xHBehO/Rt7I4iMALJ6p5LHUHPUVzajTY3VVdfvj/0hqzOmuoOSqhoeKuWt37VmgV931HHVdLXnhRKbUSpI+9+ivka6Dp7UNr1DGL9qkoc28aOS0feTz+dZ1bT1Kcd3Me64+xHabE2DHnM9nLaQseRPMexrSSm52r90pVwiDbgOzqPY/aqXKccxmte5ykwbPLmKIAYZW4cn0STVKk8R5XYjsu78M92+5xbi12kZ0Kx9ZOfEPcVoj9rf5K+YZYQ2Pc5Nc30TcGYrVhscuBMYkTGVOxrmhQ4XFqKl8OfYYwfTyG9dJtkR+OqQuU6HHXl5Kx5gAAVdOnClOcYvjHqVz33UZG9RSp1UTCiiigAp0qKAHRSooA1qKKKtKQpilRQSHQRRRSAiWotwtHiszveIw52+U4cAZ/5bhyU9EqyPThFSdrv0S4uGPhcealOXIkhPA6nqByUn+ZJI617rVuFuiXFkNzGQ4UHibWDwqbV6pUN0n2NQlBMmptE9ketOqsiTd7P/wB4C7tBHJTYAktDqNg58sHoo71JR7ixco/bRJCHmTt4D9U+ihzB6GqnBouTTN9yQBsjc1rKUpZyo/KvIoqaSQzXnwIlxirjT4zUhhR3Q4niHLGff865hqf4XPMKXL0w6paU5UIrq8LT9xZ5+xPzrq9FX0a9Si/8H9BNHzSt1cR52PLjrhzEnC19mUrHQp8vcYPPnWclbiGIJLs5T7qENKQrhBWeQSeZOTjC8Y9POu9ag05atQsdlc4wWoDCH2/C4j2V/rkVQrV8P7rp7VtulRXTMtokDjcbwlaE7440k7jluM+wrYpe0KUoNyxL0fzFtJj4XaLXpm4zpU7tzNkJy2lf1W28g42PCVZ588bY5mpybqWfHvD7LcRLsRhfCvCTxAAAk5zgdNqsV0mIgRO8vOssstqBdceXwpSjzOfX09aiLnp6FfuGa3JVwugKDjJBS4ny99uRrzlRylefc69LKkpvxeDV11ZbbedPvynweJtvtW3WtlE801w51DgfS2ph1DrW/euPC/cqB4cD1znqa7b8RXm7bop+M2CeNKY7aUnxq6D8K4mG+7sqjxUiZxDidbJyGz90HmP4sn5V6f2Lu8F3fXByWSk7FxsHxHmW5sw7+lF2tx8CpCRlYHoQrHEPvYPU1uXbTtkfdjXfRkuXBkKIcKIzagEj1wcFJ6cvUYqD0gmAYpfbY7NasoWtSuMkenlt/e/OtzUkO6zpbDsRHf7Wgp4oDbvZKJxjKjzOTvnJxUq1OFOrupLbfns/NcetjmlX3T2RwW23a0uFp4WNTxnHWfszmmCFAeq2x/mT+FTGsZn0voicbEtE0y2OBrsHAePPMD1OM7c65xp+BPt0p4zO0jWpZUUwJSw86s8OxGNk4P2tth517Xb4zK2ZL8wwGTKaW6oOEIcwsZKkgc8Z39t65ZaKl4inB2as8ZT+XfydhqvtkoSd7nVbdZWIMeE0rCzEZQ2yCkZRwo4CQeoz8iR51v1XY+qFS7uxBbjgodWoFYdyMAE5Ax0/OrDWRKFSEv1OWS8SNTMWOiiiojHRSp0DCiiikAUUUUAauadKirikdFFFIAp0qKCQ6KKKQDqOm2dh+R3yO45EnAYEqOeFah6LHJY35KyB5Y51I0UWGVibqC6WJ8fT1sDtvwAbjbwV8HVxr6yR7ZqwQJsS4RkSYMlqQwseFxo5B6bcjWYgHORsRyqtTtJBmSu46blm0TlHK0oTxMP/AH2+XzGKaUJfB+hNT7lnoqLhXlBcbh3VruM9eAlCz+zeUP8ACXyV904V0qVIxzqvjkt5FXlwqSyvg+twnh6HG1ZkNFYzyHrWx2KUNEAZODUXJA+DnsvvWtUfREpxpnhSp5txLQVhacAZSeeyjttVTdc1d8OipT8l9+I4o8OD2jHpxFShlJ88DGfM1ddGNFN9ZV/HEcWf+sD9KvTrSHkFDraVoIwUqGRWjU1MdPU8NRTh2+hRpZSlTvJnzvd77dLu4idcZbzzigUtQXMIRwY8XhGONJ9gT+FRMJ1kyWuzZQ0+Hd1KypI33CQc8J588+4rrWpvhfGfU/MsSgxIUOLuryiWVK9QfrJPsaqdq0BfZa3pN8ZTEZipKu0PCHFlO4CeHbh25ke1bOm12j8JtOy7cPyt1LmsMxrtSHXTJirMWVjHat8ldFJ8xWdm5uRClm+MBoE8KZTYy0r/APJ99q1WLr3d0N3RruvErwO54m1e6sDB9xVjZShxsJUlC0qHLGRinUa6mJUdveV0V76Udkulu1sh8g4U+rZpHz+18q34NpbD6ZM9apkoclODwo+6nkPfnSjhDacICUpTsABgAdK8N3lT73YWiN3tY+u5xcLaB1V/oKnJO1ohJyatDCL1YrOpq6MXArbUhLWUjcKyoD/erPUTa58ZxxplpYDgZbSpAVxBKignhz5kBJO/T1qWry06kqkm5GqqcKcUodgp0qdQAKKKKBjopU6QwooooA1aKKKuKB0UqdIYUUUUAFOlRQSPVKiikA6KVOgDDLisTYzkeYy08y5sptxIUk+4IqOEe42re3Hv0Uf+ClOeNI/8tw/5V/8AUKl6KXQkm0K1XmJcytttSm5LYHaRXhwOt+6fTqMg+RqQc8SVJSdyk1C3C2xbgEGS2rtWzxNvNKKHGz6pWCCP6eoxWu3OutoGJyXLnDTykMt/t0D+dtOy/dAB/l86rdO/ulqmmR9msN8tF6aS061NiJY4HpctfCrdRKkttpTgDYcz5+dXbI9aiFaksyYYl/SUYtE8KeFfEpSuXCEjcqz9nGaj3JF2vP7ntLTCV9tSQZLg6A5S3nqCrfkmhxnN3kNKMFgkbrfItuX3cdpJmqTluJGAU4oep5BI6qIHWoibFulzivrubpYbCFFEGGs7nBxxrGCry8IwPLxVJW+3Rbc0W4jQRxHLiiSpbh9VKJJUfc1tVOFoO8f5K5TvwclbbS42WnkJUgjCkqGcj0xWBu2TLcSuxPJ4OZhvHwH7p+ya6bc7DCuClO8AZf8A8VHn7jz/AL3qty7VKt6sOp4m/JxIyP8AatyGthV+DMurTnTysopLMGRcDm5uFLZ5xGj4ceij9r25VY4bSWkJaZbSlKeSAMDHtXqzWeZcSOwa4WjzdVsP96u9rscSAEqx2r3+Iry9h5f3vU9VrIQ/x5fYfhVK2OEZYUBkIhvqZ4X2WsDcjhKgMnGcZ2xnGRk+prfoFFYHU0ErKw6KQp0DHRSp0gCnSooGOilToC5//9k=" alt="Banner">
-    </div>
+    <div class="left"></div>
 
-    <!-- Right Side Form -->
     <div class="right">
-        <h2>Signup Form</h2>
 
         <form onsubmit="return validateForm()">
-            <input type="text" id="name" placeholder="Enter Name"><br>
 
-            <input type="text" id="email" placeholder="Enter Email" onkeyup="checkEmail()">
+            <h2>Signup Form</h2>
+
+            <input type="text"
+                   id="name"
+                   placeholder="Name">
+
+            <input type="text"
+                   id="email"
+                   placeholder="Email"
+                   onkeyup="checkEmail()">
+
+            <div id="emailMessage"
+                 class="message"></div>
+
+            <input type="password"
+                   id="password"
+                   placeholder="Password"
+                   onkeyup="checkPassword()">
+
+            <div id="passwordMessage"
+                 class="message"></div>
+
+            <input type="password"
+                   id="confirmPassword"
+                   placeholder="Confirm Password"
+                   onkeyup="checkConfirmPassword()">
+
+            <div id="confirmMessage"
+                 class="message"></div>
+
+            <input type="text"
+                   id="phone"
+                   placeholder="Phone Number"
+                   onkeyup="checkPhone()">
+
+            <div id="phoneMessage"
+                 class="message"></div>
+
             <br>
-            <span id="emailMsg"></span><br>
 
-            <input type="password" id="password" placeholder="Enter Password" onkeyup="checkPassword()">
-            <br>
-            <span id="passMsg"></span><br>
+            <button type="submit">
+                Signup
+            </button>
 
-            <input type="password" id="confirm" placeholder="Confirm Password" onkeyup="checkConfirm()">
-            <br>
-            <span id="confirmMsg"></span><br>
-
-            <input type="text" id="phone" placeholder="Enter Phone Number" onkeyup="checkPhone()">
-            <br>
-            <span id="phoneMsg"></span><br><br>
-
-            <button type="submit">Sign Up</button>
         </form>
+
     </div>
 
 </div>
 
 <script>
-    function checkEmail(){
-        let email = document.getElementById("email").value;
-        let pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
 
-        if(pattern.test(email)){
-            document.getElementById("emailMsg").innerHTML="Valid Email";
-        }
-        else{
-            document.getElementById("emailMsg").innerHTML="Invalid Email";
-        }
+function checkEmail() {
+
+    let email =
+        document.getElementById("email").value;
+
+    let pattern =
+        /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+    let message =
+        document.getElementById("emailMessage");
+
+    if (pattern.test(email)) {
+
+        message.innerHTML = "Valid Email";
+        message.className = "message green";
     }
+    else {
 
-    function checkPassword(){
-        let pass = document.getElementById("password").value;
-
-        if(pass.length < 6){
-            document.getElementById("passMsg").innerHTML="Weak Password";
-        }
-        else{
-            document.getElementById("passMsg").innerHTML="Strong Password";
-        }
+        message.innerHTML = "Invalid Email";
+        message.className = "message red";
     }
+}
 
-    function checkConfirm(){
-        let pass = document.getElementById("password").value;
-        let confirm = document.getElementById("confirm").value;
+function checkPassword() {
 
-        if(pass == confirm){
-            document.getElementById("confirmMsg").innerHTML="Passwords Match";
-        }
-        else{
-            document.getElementById("confirmMsg").innerHTML="Passwords do not match";
-        }
+    let password =
+        document.getElementById("password").value;
+
+    let message =
+        document.getElementById("passwordMessage");
+
+    if (password.length < 6) {
+
+        message.innerHTML = "Weak Password";
+        message.className = "message red";
     }
+    else {
 
-    function checkPhone(){
-        let phone = document.getElementById("phone").value;
-
-        if(phone.length == 10 && !isNaN(phone)){
-            document.getElementById("phoneMsg").innerHTML="Valid Phone Number";
-        }
-        else{
-            document.getElementById("phoneMsg").innerHTML="Phone must be 10 digits";
-        }
+        message.innerHTML = "Strong Password";
+        message.className = "message green";
     }
+}
 
-    function validateForm(){
-        alert("Signup Successful!");
+function checkConfirmPassword() {
+
+    let password =
+        document.getElementById("password").value;
+
+    let confirm =
+        document.getElementById("confirmPassword").value;
+
+    let message =
+        document.getElementById("confirmMessage");
+
+    if (password == confirm) {
+
+        message.innerHTML = "Passwords Match";
+        message.className = "message green";
+    }
+    else {
+
+        message.innerHTML = "Passwords Do Not Match";
+        message.className = "message red";
+    }
+}
+
+function checkPhone() {
+
+    let phone =
+        document.getElementById("phone").value;
+
+    let message =
+        document.getElementById("phoneMessage");
+
+    let pattern = /^\d{10}$/;
+
+    if (pattern.test(phone)) {
+
+        message.innerHTML = "Valid Phone Number";
+        message.className = "message green";
+    }
+    else {
+
+        message.innerHTML =
+            "Phone Number must contain 10 digits";
+
+        message.className = "message red";
+    }
+}
+
+function validateForm() {
+
+    let email =
+        document.getElementById("email").value;
+
+    let password =
+        document.getElementById("password").value;
+
+    let confirm =
+        document.getElementById("confirmPassword").value;
+
+    let phone =
+        document.getElementById("phone").value;
+
+    let emailPattern =
+        /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+    let phonePattern =
+        /^\d{10}$/;
+
+    if (!emailPattern.test(email)) {
+
+        alert("Invalid Email");
+
         return false;
     }
+
+    if (password.length < 6) {
+
+        alert("Weak Password");
+
+        return false;
+    }
+
+    if (password != confirm) {
+
+        alert("Passwords do not match");
+
+        return false;
+    }
+
+    if (!phonePattern.test(phone)) {
+
+        alert("Invalid Phone Number");
+
+        return false;
+    }
+
+    return true;
+}
+
 </script>
 
 </body>
